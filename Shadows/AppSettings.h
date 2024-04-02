@@ -11,6 +11,7 @@ enum class Scene
     PowerPlant = 0,
     Tower = 1,
     Columns = 2,
+    Test = 3,
 
     NumValues
 };

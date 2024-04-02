@@ -183,11 +183,13 @@ float4 BlurVSM(in VSOutput input) : SV_Target0
         {
             float4 sample = BlurSample(input.Position.xy, i, ShadowMapDimensions);
 
-            sample *= saturate((Radius + 0.5f) - abs(i));
+            //sample *= saturate((Radius + 0.5f) - abs(i));
 
             sum += sample;
         }
 
-        return sum / KernelSize;
+        const int count = SampleRadius_*2+1;
+
+        return sum / count;
     #endif
 }

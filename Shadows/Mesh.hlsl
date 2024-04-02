@@ -731,7 +731,10 @@ float3 ShadowVisibility(in float3 positionWS, in float depthVS, in float nDotL, 
 {
 	float3 shadowVisibility = 1.0f;
 	uint cascadeIdx = NumCascades - 1;
+
+    #if SelectFromProjection_
     float3 projectionPos = mul(float4(positionWS, 1.0f), ShadowMatrix).xyz;
+    #endif
 
 	// Figure out which cascade to sample from
 	[unroll]
@@ -757,7 +760,7 @@ float3 ShadowVisibility(in float3 positionWS, in float depthVS, in float nDotL, 
     float3 offset = GetShadowPosOffset(nDotL, normal) / abs(CascadeScales[cascadeIdx].z);
 
     // Project into shadow space
-    float3 samplePos = positionWS + offset;
+    float3 samplePos = positionWS;// + offset;
 	float3 shadowPosition = mul(float4(samplePos, 1.0f), ShadowMatrix).xyz;
     float3 shadowPosDX = ddx_fine(shadowPosition);
     float3 shadowPosDY = ddy_fine(shadowPosition);

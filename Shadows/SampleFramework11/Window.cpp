@@ -11,6 +11,28 @@
 
 #include "Window.h"
 
+#include <shellscalingapi.h>
+
+void 
+WIN_EnableDPIAwareness()
+{
+    HMODULE shCore = LoadLibraryA("Shcore.dll");
+    if (shCore)
+    {
+        typedef HRESULT(*SetProcessDpiAwarenessFunc)(PROCESS_DPI_AWARENESS);
+
+        SetProcessDpiAwarenessFunc setProcessDpiAwareness =
+            (SetProcessDpiAwarenessFunc)GetProcAddress(shCore, "SetProcessDpiAwareness");
+
+        if (setProcessDpiAwareness != NULL)
+        {
+            setProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
+        }
+
+        FreeLibrary(shCore);
+    }
+}
+
 namespace SampleFramework11
 {
 
@@ -164,6 +186,8 @@ void Window::MakeWindow(LPCWSTR sIconResource, LPCWSTR sSmallIconResource, LPCWS
 							hinstance,
 							(void*)this
 							);
+
+	WIN_EnableDPIAwareness();
 
 	if(!hwnd)
 		throw Win32Exception(::GetLastError());

@@ -637,7 +637,7 @@ void Model::GenerateBoxScene(ID3D11Device* device)
 
     meshes.resize(2);
     meshes[0].InitBox(device, Float3(2.0f), Float3(0.0f, 1.5f, 0.0f), Quaternion(), 0);
-    meshes[1].InitBox(device, Float3(10.0f, 0.25f, 10.0f), Float3(0.0f), Quaternion(), 0);
+    meshes[1].InitBox(device, Float3(1000.0f, 0.25f, 1000.0f), Float3(0.0f), Quaternion(), 0);
 }
 
 void Model::GeneratePlaneScene(ID3D11Device* device, const Float2& dimensions, const Float3& position,

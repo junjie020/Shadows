@@ -16,7 +16,7 @@
 using std::wstring;
 
 #if _DEBUG
-    #define UseDebugDevice_ 1
+    #define UseDebugDevice_ 0
     #define BreakOnDXError_ (UseDebugDevice_ && 1)
 #else
     #define UseDebugDevice_ 0
@@ -44,23 +44,23 @@ DeviceManager::DeviceManager()  :  backBufferFormat(DXGI_FORMAT_R8G8B8A8_UNORM_S
     POINT point;
     point.x = 0;
     point.y = 0;
-    HMONITOR monitor = MonitorFromPoint(point, MONITOR_DEFAULTTOPRIMARY);
-    if(monitor != 0)
-    {
-        MONITORINFOEX info;
-        ZeroMemory(&info, sizeof(info));
-        info.cbSize = sizeof(MONITORINFOEX);
-        if(GetMonitorInfo(monitor, &info) != 0)
-        {
-            int32 width = info.rcWork.right - info.rcWork.left;
-            int32 height = info.rcWork.bottom - info.rcWork.top;
-            if(width > 1920 && height > 1080)
-            {
-                backBufferWidth = 1920;
-                backBufferHeight = 1080;
-            }
-        }
-    }
+    // HMONITOR monitor = MonitorFromPoint(point, MONITOR_DEFAULTTOPRIMARY);
+    // if(monitor != 0)
+    // {
+    //     MONITORINFOEX info;
+    //     ZeroMemory(&info, sizeof(info));
+    //     info.cbSize = sizeof(MONITORINFOEX);
+    //     if(GetMonitorInfo(monitor, &info) != 0)
+    //     {
+    //         int32 width = info.rcWork.right - info.rcWork.left;
+    //         int32 height = info.rcWork.bottom - info.rcWork.top;
+    //         if(width > 1920 && height > 1080)
+    //         {
+    //             backBufferWidth = 1920;
+    //             backBufferHeight = 1080;
+    //         }
+    //     }
+    // }
 }
 
 DeviceManager::~DeviceManager()

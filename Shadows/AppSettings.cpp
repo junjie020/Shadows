@@ -3,11 +3,12 @@
 
 using namespace SampleFramework11;
 
-static const char* SceneLabels[3] =
+static const char* SceneLabels[4] =
 {
     "PowerPlant",
     "Tower",
     "Columns",
+    "Test",
 };
 
 static const char* PartitionModeLabels[3] =
@@ -137,7 +138,7 @@ namespace AppSettings
     {
         TwBar* tweakBar = Settings.TweakBar();
 
-        CurrentScene.Initialize(tweakBar, "CurrentScene", "SceneControls", "Current Scene", "The scene to render", Scene::PowerPlant, 3, SceneLabels);
+        CurrentScene.Initialize(tweakBar, "CurrentScene", "SceneControls", "Current Scene", "The scene to render", Scene::Test, 4, SceneLabels);
         Settings.AddSetting(&CurrentScene);
 
         AnimateLight.Initialize(tweakBar, "AnimateLight", "SceneControls", "Animate Light", "Automatically rotates the light about the Y axis", false);

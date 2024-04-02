@@ -45,6 +45,7 @@ static const wstring MeshFileNames[] =
     L"Powerplant\\Powerplant.sdkmesh",
     L"Tower\\Tower.sdkmesh",
     L"Columns\\Columns.sdkmesh",
+    L"",
 };
 
 // Scale values applied to the mesh
@@ -53,13 +54,16 @@ static const float MeshScales[] =
     0.5f,
     0.025f,
     0.25f,
+    1.f,
 };
 
 static const float CharacterScale = 1.0f;
 static const Float3 CharacterPos = Float3(25.0f, 0.0f, 3.0f);
 
+static inline float ToRadian(float degree) { return XM_PI * (degree/180.f); }
+
 ShadowsApp::ShadowsApp() :  App(L"Shadows", MAKEINTRESOURCEW(IDI_ICON1)),
-                                camera(WindowWidthF / WindowHeightF, XM_PIDIV4 * 0.75f, NearClip, FarClip)
+                                camera(WindowWidthF / WindowHeightF, ToRadian(60.f), NearClip, FarClip)
 {
     deviceManager.SetMinFeatureLevel(D3D_FEATURE_LEVEL_11_0);
 }
@@ -94,15 +98,21 @@ void ShadowsApp::Initialize()
     ID3D11DeviceContextPtr deviceContext = deviceManager.ImmediateContext();
 
     // Camera setup
-    camera.SetPosition(Float3(40.0f, 5.0f, 5.0f));
-    camera.SetYRotation(-XM_PIDIV2);
+    camera.SetPosition(Float3(0.f, 10.f, -10.f));
+    camera.SetOrientation(Quaternion::FromAxisAngle(Float3(1.f, 0.f, 0.f), XM_PIDIV4));
+    //camera.SetYRotation(-XM_PIDIV2);
 
     // Load the meshes
     for(uint32 i = 0; i < uint32(Scene::NumValues); ++i)
     {
-        wstring path(L"..\\Content\\Models\\");
-        path += MeshFileNames[i];
-        models[i].CreateFromSDKMeshFile(device, path.c_str());
+        if (i == uint32(Scene::Test)){
+            models[i].GenerateBoxScene(device);
+        } else {
+            wstring path(L"..\\Content\\Models\\");
+            path += MeshFileNames[i];
+            models[i].CreateFromSDKMeshFile(device, path.c_str());
+        }
+        
     }
 
     // models[0].SaveAsOBJ(L"..\\Content\\Models\\Powerplant\\Powerplant.obj");

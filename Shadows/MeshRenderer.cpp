@@ -143,7 +143,7 @@ static void ComputeFrustum(const XMMATRIX& viewProj, Frustum& frustum)
     XMVECTOR corners[8] =
     {                                               //                         7--------6
         XMVectorSet( 1.0f, -1.0f, 0.0f, 1.0f),      //                        /|       /|
-        XMVectorSet(-1.0f, -1.0f, 0.0f, 1.0f),      //     Y ^               / |      / |
+        XMVectorSet(-1.0f, -1.0f, 0.0f, 1.0f),      //   Y ^                 / |      / |
         XMVectorSet( 1.0f,  1.0f, 0.0f, 1.0f),      //     | _              3--------2  |
         XMVectorSet(-1.0f,  1.0f, 0.0f, 1.0f),      //     | /' Z           |  |     |  |
         XMVectorSet( 1.0f, -1.0f, 1.0f, 1.0f),      //     |/               |  5-----|--4
@@ -279,11 +279,6 @@ static Float4x4 MakeGlobalShadowMatrix(const Camera& camera)
     // This needs to be constant for it to be stable
     if(AppSettings::StabilizeCascades)
         upDir = Float3(0.0f, 1.0f, 0.0f);
-
-    // Create a temporary view matrix for the light
-    Float3 lightCameraPos = frustumCenter;
-    Float3 lookAt = frustumCenter - AppSettings::LightDirection;
-    Float4x4 lightView = XMMatrixLookAtLH(lightCameraPos.ToSIMD(), lookAt.ToSIMD(), upDir.ToSIMD());
 
     // Get position of the shadow camera
     Float3 shadowCameraPos = frustumCenter + AppSettings::LightDirection.Value() * -0.5f;

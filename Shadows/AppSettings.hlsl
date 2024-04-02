@@ -36,6 +36,7 @@ cbuffer AppSettings : register(b7)
 static const int Scene_PowerPlant = 0;
 static const int Scene_Tower = 1;
 static const int Scene_Columns = 2;
+static const int Scene_Test = 3;
 
 static const int PartitionMode_Manual = 0;
 static const int PartitionMode_Logarithmic = 1;

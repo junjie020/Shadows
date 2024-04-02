@@ -33,6 +33,7 @@ enum Scene
     PowerPlant = 0,
     Tower = 1,
     Columns = 2,
+    Test = 3,
 }
 
 enum PartitionMode
@@ -142,7 +143,7 @@ public class Settings
         [DisplayName("Current Scene")]
         [HelpText("The scene to render")]
         [UseAsShaderConstant(false)]
-        Scene CurrentScene = Scene.PowerPlant;
+        Scene CurrentScene = Scene.Test;
 
         [DisplayName("Animate Light")]
         [HelpText("Automatically rotates the light about the Y axis")]
